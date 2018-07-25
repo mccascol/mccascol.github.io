@@ -168,22 +168,157 @@ $('.navbar-collapse ul li a').click(function() {
     $('.navbar-toggle:visible').click();
 });
 
-// Async contact form
-$('form[id=contactForm]').submit(function(){
-  $.post($(this).attr('action'), $(this).serialize(), function(res){
-    $('form[id=contactForm] #success').hide();
-    $('form[id=contactForm] #error').hide();
-    if (res.code == "200")
-      $('form[id=contactForm] #success').show();
-    }).fail(function(){
-    $('form[id=contactForm] #success').hide();
-    $('form[id=contactForm] #error').hide();
-    $('form[id=contactForm] #error').show();
-  });
-  return false;
-});
+// Image Gallery
+var imagesObj = [
+  {
+    image: "https://res.cloudinary.com/nirmalrizal/image/upload/v1532483637/mccascol/photo_2018-07-25_07-30-48.jpg",
+    title: "Mozilla Campus Club Orientation",
+    desp: "Mozilla Campus Club Orientation"
+  },
+  {
+    image: "https://res.cloudinary.com/nirmalrizal/image/upload/v1532483637/mccascol/photo_2018-07-25_07-30-51.jpg",
+    title: "Mozilla Campus Club Orientation",
+    desp: "Mozilla Campus Club Orientation"
+  },
+  {
+    image: "https://res.cloudinary.com/nirmalrizal/image/upload/v1532483637/mccascol/photo_2018-07-25_07-31-25.jpg",
+    title: "Game Development with Unity",
+    desp: "Game Development with Unity"
+  },
+  {
+    image: "https://res.cloudinary.com/nirmalrizal/image/upload/v1532483636/mccascol/photo_2018-07-25_07-30-44.jpg",
+    title: "Mozilla Campus Club Orientation",
+    desp: "Mozilla Campus Club Orientation"
+  },
+  {
+    image: "https://res.cloudinary.com/nirmalrizal/image/upload/v1532483636/mccascol/photo_2018-07-25_07-30-45.jpg",
+    title: "Mozilla Campus Club Orientation",
+    desp: "Mozilla Campus Club Orientation"
+  },
+  {
+    image: "https://res.cloudinary.com/nirmalrizal/image/upload/v1532483636/mccascol/photo_2018-07-25_07-30-36.jpg",
+    title: "Mozilla Campus Club Orientation",
+    desp: "Mozilla Campus Club Orientation"
+  },
+  {
+    image: "https://res.cloudinary.com/nirmalrizal/image/upload/v1532483635/mccascol/photo_2018-07-25_07-30-40.jpg",
+    title: "Mozilla Campus Club Orientation",
+    desp: "Mozilla Campus Club Orientation"
+  },
+  {
+    image: "https://res.cloudinary.com/nirmalrizal/image/upload/v1532483635/mccascol/photo_2018-07-25_07-30-35.jpg",
+    title: "Mozilla Campus Club Orientation",
+    desp: "Mozilla Campus Club Orientation"
+  },
+  {
+    image: "https://res.cloudinary.com/nirmalrizal/image/upload/v1532483635/mccascol/photo_2018-07-25_07-30-31.jpg",
+    title: "Git Workshop",
+    desp: "Git Workshop"
+  },
+  {
+    image: "https://res.cloudinary.com/nirmalrizal/image/upload/v1532483635/mccascol/photo_2018-07-25_07-30-29.jpg",
+    title: "Git Workshop",
+    desp: "Git Workshop"
+  },
+  {
+    image: "https://res.cloudinary.com/nirmalrizal/image/upload/v1532483635/mccascol/photo_2018-07-25_07-30-26.jpg",
+    title: "Git Workshop",
+    desp: "Git Workshop"
+  },
+  {
+    image: "https://res.cloudinary.com/nirmalrizal/image/upload/v1532483634/mccascol/photo_2018-07-25_07-29-37.jpg",
+    title: "Workshop on Web Extension",
+    desp: "Workshop on Web Extension"
+  },
+  {
+    image: "https://res.cloudinary.com/nirmalrizal/image/upload/v1532483634/mccascol/photo_2018-07-25_07-30-18.jpg",
+    title: "Workshop on Web Extension",
+    desp: "Workshop on Web Extension"
+  },
+  {
+    image: "https://res.cloudinary.com/nirmalrizal/image/upload/v1532483634/mccascol/photo_2018-07-25_07-30-01.jpg",
+    title: "Workshop on Web Extension",
+    desp: "Workshop on Web Extension"
+  },
+  {
+    image: "https://res.cloudinary.com/nirmalrizal/image/upload/v1532483634/mccascol/photo_2018-07-25_07-30-25.jpg",
+    title: "Git Workshop",
+    desp: "Git Workshop"
+  },
+  {
+    image: "https://res.cloudinary.com/nirmalrizal/image/upload/v1532483634/mccascol/photo_2018-07-25_07-29-34.jpg",
+    title: "Introduction to Common Voice and DeepSpeech",
+    desp: "Introduction to Common Voice and DeepSpeech"
+  },
+  {
+    image: "https://res.cloudinary.com/nirmalrizal/image/upload/v1532483633/mccascol/photo_2018-07-25_07-29-58.jpg",
+    title: "Workshop on Web Extension",
+    desp: "Workshop on Web Extension"
+  },
+  {
+    image: "https://res.cloudinary.com/nirmalrizal/image/upload/v1532483633/mccascol/photo_2018-07-25_07-31-57.jpg",
+    title: "Game Development with Unity",
+    desp: "Game Development with Unity"
+  },
+  {
+    image: "https://res.cloudinary.com/nirmalrizal/image/upload/v1532483633/mccascol/photo_2018-07-25_07-29-31.jpg",
+    title: "Introduction to Common Voice and DeepSpeech",
+    desp: "Introduction to Common Voice and DeepSpeech"
+  },
+  {
+    image: "https://res.cloudinary.com/nirmalrizal/image/upload/v1532483633/mccascol/photo_2018-07-25_07-29-27.jpg",
+    title: "Introduction to Common Voice and DeepSpeech",
+    desp: "Introduction to Common Voice and DeepSpeech"
+  },
+  {
+    image: "https://res.cloudinary.com/nirmalrizal/image/upload/v1532483633/mccascol/photo_2018-07-25_07-29-48.jpg",
+    title: "Workshop on Web Extension",
+    desp: "Workshop on Web Extension"
+  },
+  {
+    image: "https://res.cloudinary.com/nirmalrizal/image/upload/v1532483632/mccascol/photo_2018-07-25_07-31-55.jpg",
+    title: "Game Development with Unity",
+    desp: "Game Development with Unity"
+  },
+  {
+    image: "https://res.cloudinary.com/nirmalrizal/image/upload/v1532483632/mccascol/photo_2018-07-25_07-31-45.jpg",
+    title: "Game Development with Unity",
+    desp: "Game Development with Unity"
+  },
+  {
+    image: "https://res.cloudinary.com/nirmalrizal/image/upload/v1532483632/mccascol/photo_2018-07-25_07-31-30.jpg",
+    title: "Game Development with Unity",
+    desp: "Game Development with Unity"
+  },
+  {
+    image: "https://res.cloudinary.com/nirmalrizal/image/upload/v1532483632/mccascol/photo_2018-07-25_07-29-13.jpg",
+    title: "Introduction to Common Voice and DeepSpeech",
+    desp: "Introduction to Common Voice and DeepSpeech"
+  },
+  {
+    image: "https://res.cloudinary.com/nirmalrizal/image/upload/v1532483632/mccascol/photo_2018-07-25_07-29-17.jpg",
+    title: "Introduction to Common Voice and DeepSpeech",
+    desp: "Introduction to Common Voice and DeepSpeech"
+  },
+  {
+    image: "https://res.cloudinary.com/nirmalrizal/image/upload/v1532483632/mccascol/photo_2018-07-25_07-28-51.jpg",
+    title: "Introduction to Common Voice and DeepSpeech",
+    desp: "Introduction to Common Voice and DeepSpeech"
+  }
+];
 
-// Contact form validation
-$.validate({
-  modules : 'html5, toggleDisabled'
-});
+$(document).ready(function(){ 
+
+  var imageHtml = '';
+  imagesObj.map(function(img){
+
+    imageHtml += '<img alt="'+ img.title +'" src="'+ img.image +'" data-image="'+ img.image +'" data-description="'+ img.desp +'">';
+
+  });
+
+  $("#gallery-images").html(imageHtml);
+
+  $("#gallery-images").unitegallery({
+    gallery_theme: "tiles"
+  }); 
+}); 
